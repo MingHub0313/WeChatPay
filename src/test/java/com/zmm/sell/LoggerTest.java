@@ -16,6 +16,10 @@ public class LoggerTest {
 
     @Test
     public void test1(){
+        String name="zmm";
+        String password="123456";
+        logger.info("name: " + name + ",password: "+ password);
+        logger.info("name: {},password: {}",name,password);
         logger.debug("debug...");
         logger.info("info...");
         logger.error("error...");

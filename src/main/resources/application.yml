@@ -13,9 +13,12 @@ spring:
     port: 6379
 server:
   context-path: /sell
+
+
+# 默认 info  可以指定到某个类
 #logging:
 #  pattern:
-#    console: "%d - %msg%n"
+#    console: "%d - %msg%n"   # 日期--信息--换行
 ##  path: /var/log/tomcat/
 #  file: /var/log/tomcat/sell.log
 #  level:
