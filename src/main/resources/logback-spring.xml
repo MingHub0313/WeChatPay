@@ -3,17 +3,23 @@
 <configuration>
 
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--展示的样式-->
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
+                <!--日期&#45;&#45;信息&#45;&#45;换行-->
                 %d - %msg%n
             </pattern>
         </layout>
     </appender>
 
+    <!--生成文件  滚动生成-->
     <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--根据等级过滤-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
+            <!--如果匹配就禁止   DENY 禁止-->
             <onMatch>DENY</onMatch>
+            <!--反之就使用规则   ACCEPT 接受   NEUTRAL  中立-->
             <onMismatch>ACCEPT</onMismatch>
         </filter>
         <encoder>
@@ -24,12 +30,13 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>/var/log/tomcat/sell/info.%d.log</fileNamePattern>
+            <fileNamePattern>E:\workspace\WeChatPay\log\info.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
 
     <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--根据范围过滤-->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
@@ -41,7 +48,7 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>/var/log/tomcat/sell/error.%d.log</fileNamePattern>
+            <fileNamePattern>E:\workspace\WeChatPay\log\error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
