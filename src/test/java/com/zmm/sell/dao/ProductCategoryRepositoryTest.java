@@ -64,8 +64,8 @@ public class ProductCategoryRepositoryTest {
     public void updateTest(){
         ProductCategory productCategory=new ProductCategory();
         productCategory.setCategoryId(1);
-        productCategory.setCategoryName("化妆品");
-        productCategory.setCategoryType(1);
+        productCategory.setCategoryName("热销榜");
+        productCategory.setCategoryType(2);
         productCategoryRepository.save(productCategory);
     }
 
