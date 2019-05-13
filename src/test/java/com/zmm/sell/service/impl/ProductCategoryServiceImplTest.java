@@ -55,13 +55,13 @@ public class ProductCategoryServiceImplTest {
 
     /**
      * 快捷键
-     * ctrl   +  shift   + 回车      ----> 跳到 行尾
-     * ctrl   +  alt     +  L        ----> 格式化代码
-     * ctrl   +  E                   ----> 最近更改的代码 (alt+shift+C)
-     * ctrl   +  P                   ----> 方法参数提示
-     * alt    +  shift   + C         ----> 对比最近修改的代码
-     * shift  +  F6                  ----> 重构-重命名
-     * ctrl   + shift    + 向上键/向下键    ----> 该行上移  代码向上/下移动  Up/Down
+     * ctrl   +  shift   + 回车           ----> 跳到 行尾
+     * ctrl   +  alt     +  L             ----> 格式化代码
+     * ctrl   +  E                        ----> 最近更改的代码 (alt+shift+C)
+     * ctrl   +  P                        ----> 方法参数提示
+     * alt    +  shift   + C              ----> 对比最近修改的代码
+     * shift  +  F6                       ----> 重构-重命名
+     * ctrl   + shift    + 向上键/向下键  ----> 该行上移  代码向上/下移动  Up/Down
      * ctrl   + alt      + left/right    ----->返回至上次浏览的位置
      */
 }
