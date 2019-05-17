@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/buyer/product")
 public class BuyerProductController {
@@ -67,7 +68,7 @@ public class BuyerProductController {
                 if(productInfo.getCategoryType().equals(productCategory.getCategoryType())){
                     ProductInfoVO productInfoVO=new ProductInfoVO();
 
-                    //新方法
+                    //新方法  相同的属性都会被替换,不管是否有值  (source  target)
                     BeanUtils.copyProperties(productInfo,productInfoVO);
                     productInfoVOList.add(productInfoVO);
                 }
