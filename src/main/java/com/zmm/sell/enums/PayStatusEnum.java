@@ -3,25 +3,25 @@ package com.zmm.sell.enums;
 import lombok.Getter;
 
 /**
- * @Name ProductStatusEnum
+ * @Name PayStatusEnum
  * @Author 900045
  * @Created by 2019/5/24 0024
  */
 @Getter
-public enum ProductStatusEnum {
+public enum PayStatusEnum {
 
     /**
-     * 商品相关的状态
+     * 支付相关的状态
      */
-    UP(0,"上架"),
-    DOWN(1,"下架"),
+    WAIT(0,"待支付"),
+    SUCCESS(1,"支付成功"),
     ;
 
     private Integer code;
 
     private String message;
 
-    ProductStatusEnum(Integer code, String message) {
+    PayStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -3,25 +3,26 @@ package com.zmm.sell.enums;
 import lombok.Getter;
 
 /**
- * @Name ProductStatusEnum
+ * @Name OpenStatusEnum
  * @Author 900045
  * @Created by 2019/5/24 0024
  */
 @Getter
-public enum ProductStatusEnum {
+public enum OpenStatusEnum {
 
     /**
-     * 商品相关的状态
+     * 订单相关的状态
      */
-    UP(0,"上架"),
-    DOWN(1,"下架"),
+    NEW(0,"新订单"),
+    FINISHED(1,"完结"),
+    CANCEL(2,"已取消"),
     ;
 
     private Integer code;
 
     private String message;
 
-    ProductStatusEnum(Integer code, String message) {
+    OpenStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
