@@ -47,12 +47,12 @@ public class ProductInfoServiceImplTest {
     @Test
     public void save() {
         ProductInfo productInfo=new ProductInfo();
-        productInfo.setProductId("2");
-        productInfo.setProductName("薯条");
-        productInfo.setProductPrice(new BigDecimal(14.9));
-        productInfo.setProductStock(100);
-        productInfo.setProductDescription("很美味");
-        productInfo.setProductIcon("http://www.薯条.jpg");
+        productInfo.setProductId("123457");
+        productInfo.setProductName("皮蛋粥");
+        productInfo.setProductPrice(new BigDecimal(9.9));
+        productInfo.setProductStock(200);
+        productInfo.setProductDescription("营养很好");
+        productInfo.setProductIcon("http://www.皮蛋粥.jpg");
         productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
         productInfo.setCategoryType(1);
         ProductInfo save = productInfoService.save(productInfo);

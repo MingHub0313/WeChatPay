@@ -1,6 +1,7 @@
 package com.zmm.sell.service;
 
 import com.zmm.sell.domain.ProductInfo;
+import com.zmm.sell.dto.CartDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -39,10 +40,13 @@ public interface ProductInfoService {
     /**
      * 加库存
      */
+    void increaseStock(List<CartDTO> cartDTOList);
 
     /**
      * 减库存
+     * @param cartDTOList
      */
+    void decreaseStock(List<CartDTO> cartDTOList);
 
 
 }

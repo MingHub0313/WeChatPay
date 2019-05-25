@@ -1,31 +1,25 @@
-package com.zmm.sell.domain;
+package com.zmm.sell.dto;
 
-import com.zmm.sell.enums.OpenStatusEnum;
-import com.zmm.sell.enums.PayStatusEnum;
+import com.zmm.sell.domain.OrderDetail;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
- * @Name OrderMaster
+ * @Name OrderDTO
  * @Author 900045
- * @Created by 2019/5/24 0024
+ * @Created by 2019/5/25 0025
  */
-@Entity
-@DynamicUpdate
 @Data
-public class OrderMaster {
-
+public class OrderDTO {
 
     /**
-     * 订单Id
+     * 订单id
      */
-    @Id
     private String orderId;
+
     /**
      * 买家名称
      */
@@ -50,12 +44,12 @@ public class OrderMaster {
     /**
      * 订单状态 默认为0 新订单
      */
-    private Integer orderStatus= OpenStatusEnum.NEW.getCode();
+    private Integer orderStatus;
 
     /**
      *支付状态 默认为 0 未支付
      */
-    private Integer payStatus= PayStatusEnum.WAIT.getCode();
+    private Integer payStatus;
 
     /**
      * 创建时间
@@ -67,6 +61,5 @@ public class OrderMaster {
      */
     private  Date updateTime;
 
-    //@Transient
-    //private List<OrderDetail> orderDetailList;
+    private List<OrderDetail> orderDetailList;
 }
