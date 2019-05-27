@@ -2,6 +2,11 @@ package com.zmm.sell.vo;
 
 import lombok.Data;
 
+/**
+ * 返回封装数据
+ * @JsonInclude(JsonInclude.Include.NON_NULL)
+ * @param <T>
+ */
 @Data
 public class ResultVo<T> {
 
@@ -13,7 +18,7 @@ public class ResultVo<T> {
     /**
      * 提示信息
      */
-    private String msg;
+    private String msg="";
 
     /**
      * 具体内容

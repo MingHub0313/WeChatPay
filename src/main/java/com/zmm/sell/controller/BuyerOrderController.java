@@ -5,6 +5,7 @@ import com.zmm.sell.dto.OrderDTO;
 import com.zmm.sell.enums.ResultEnum;
 import com.zmm.sell.exception.SellException;
 import com.zmm.sell.form.OrderForm;
+import com.zmm.sell.service.BuyerService;
 import com.zmm.sell.service.OrderMasterService;
 import com.zmm.sell.utils.ResultVoUtil;
 import com.zmm.sell.vo.ResultVo;
@@ -40,7 +41,7 @@ public class BuyerOrderController {
     private OrderMasterService orderMasterService;
 
     @Autowired
-    //private BuyerService buyerService;
+    private BuyerService buyerService;
 
     /**
      * 创建订单
@@ -101,8 +102,10 @@ public class BuyerOrderController {
     @GetMapping("/detail")
     public ResultVo<OrderDTO> detail(@RequestParam("openid") String openid,
                                      @RequestParam("orderId") String orderId) {
-        //OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
-        return ResultVoUtil.success();
+        // TODO 不安全的做法 findOne(orderId);
+
+        OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
+        return ResultVoUtil.success(orderDTO);
     }
 
     /**
@@ -114,7 +117,8 @@ public class BuyerOrderController {
     @PostMapping("/cancel")
     public ResultVo cancel(@RequestParam("openid") String openid,
                            @RequestParam("orderId") String orderId) {
-        //buyerService.cancelOrder(openid, orderId);
+        // TODO 不安全的做法 orderMasterService.cancel(orderDTO)
+        buyerService.cancelOrder(openid, orderId);
         return ResultVoUtil.success();
     }
 

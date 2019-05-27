@@ -1,6 +1,8 @@
 package com.zmm.sell.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zmm.sell.domain.OrderDetail;
+import com.zmm.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,7 +13,10 @@ import java.util.List;
  * @Name OrderDTO
  * @Author 900045
  * @Created by 2019/5/25 0025
+ * // 过时@JsonSerialize
+ * @JsonInclude(JsonInclude.Include.NON_NULL)
  */
+
 @Data
 public class OrderDTO {
 
@@ -54,12 +59,18 @@ public class OrderDTO {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private  Date updateTime;
 
-    private List<OrderDetail> orderDetailList;
+    /**
+     * 通过new ArrayList<>()  当数据为空时 返回前台 []
+     * = new ArrayList<>()
+     */
+    private List<OrderDetail> orderDetailList ;
 }

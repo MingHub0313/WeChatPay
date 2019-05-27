@@ -39,6 +39,7 @@ public interface ProductInfoService {
 
     /**
      * 加库存
+     * @param cartDTOList
      */
     void increaseStock(List<CartDTO> cartDTOList);
 

@@ -142,6 +142,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO cancel(OrderDTO orderDTO) {
         OrderMaster orderMaster = new OrderMaster();
+        //问题 5 之前在此处进行 copyProperties(orderDTO, orderMaster);
         //判断订单状态
         if (!orderDTO.getOrderStatus().equals(OpenStatusEnum.NEW.getCode())) {
             log.error("【取消订单】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
@@ -149,13 +150,14 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         }
         //修改订单状态
         orderDTO.setOrderStatus(OpenStatusEnum.CANCEL.getCode());
+        //todo 在此处进行对象 copy
         BeanUtils.copyProperties(orderDTO, orderMaster);
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
             log.error("【取消订单】更新失败, orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
-        //返回库存
+        //返还库存
         if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
             log.error("【取消订单】订单中无商品详情, orderDTO={}", orderDTO);
             throw new SellException(ResultEnum.ORDER_DETAIL_EMPTY);
