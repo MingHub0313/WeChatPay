@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @Name PayServiceImpl
  * @Author 900045
@@ -28,7 +30,7 @@ public class PayServiceImpl implements PayService {
 
     private static final String ORDER_NAME = "微信点餐订单";
 
-    @Autowired
+    @Resource
     private BestPayServiceImpl bestPayService;
 
     @Autowired
