@@ -18,70 +18,71 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * @Name BuyerProductController
+ * @Author 900045
+ * @Created by 2019/5/30 0030
+ */
 @RestController
 @RequestMapping("/buyer/product")
 public class BuyerProductController {
 
 
-    @Autowired
-    private ProductInfoService productInfoService;
+	@Autowired
+	private ProductInfoService productInfoService;
 
-    @Autowired
-    private ProductCategoryService productCategoryService;
+	@Autowired
+	private ProductCategoryService productCategoryService;
 
-    @GetMapping("/list")
-    public ResultVo list(){
-        // 1. 查询所有的上架商品
-        List<ProductInfo> productInfoList = productInfoService.findUpAll();
+	@GetMapping(value = "/list")
+	public ResultVo list() {
+		// 1. 查询所有的上架商品
+		List<ProductInfo> productInfoList = productInfoService.findUpAll();
 
-        // 2. 查询类目(一次性查询)
+		// 2. 查询类目(一次性查询)
 
-        //List<Integer> categoryTypeList=new ArrayList<>();
-        //传统方法
+		//传统方法 ---- new ArrayList<>()对象  通过for循环添加到list集合中
 
-       /* for (ProductInfo productInfo: productInfoList) {
-            categoryTypeList.add(productInfo.getCategoryType());
-        }*/
-
-        //精简方法
-        List<Integer> categoryTypeList=productInfoList.stream()
-                .map(e->e.getCategoryType())
-                .collect(Collectors.toList());
-        List<ProductCategory> productCategoryList = productCategoryService.findByCategoryTypeIn(categoryTypeList);
+		/**
+		 *精简方法
+		 */
+		List<Integer> categoryTypeList = productInfoList.stream()
+				.map(e -> e.getCategoryType())
+				.collect(Collectors.toList());
+		List<ProductCategory> productCategoryList = productCategoryService.findByCategoryTypeIn(categoryTypeList);
 
 
-        /**
-         * 注意:
-         * 不要把数据库的查询 放入for循环中
-         */
-        // 3. 数据封装
-        List<ProductVo> productVOList = new ArrayList<>();
-        for (ProductCategory productCategory:productCategoryList){
-            ProductVo productVo=new ProductVo();
-            productVo.setCategoryType(productCategory.getCategoryType());
-            productVo.setCategoryName(productCategory.getCategoryName());
+		/**
+		 * 注意:
+		 * 不要把数据库的查询 放入for循环中
+		 */
+		// 3. 数据封装
+		List<ProductVo> productVOList = new ArrayList<>();
+		for (ProductCategory productCategory : productCategoryList) {
+			ProductVo productVo = new ProductVo();
+			productVo.setCategoryType(productCategory.getCategoryType());
+			productVo.setCategoryName(productCategory.getCategoryName());
 
 
-            List<ProductInfoVO> productInfoVOList=new ArrayList<>();
-            for (ProductInfo productInfo:productInfoList) {
-                if(productInfo.getCategoryType().equals(productCategory.getCategoryType())){
-                    ProductInfoVO productInfoVO=new ProductInfoVO();
+			List<ProductInfoVO> productInfoVOList = new ArrayList<>();
+			for (ProductInfo productInfo : productInfoList) {
+				if (productInfo.getCategoryType().equals(productCategory.getCategoryType())) {
+					ProductInfoVO productInfoVO = new ProductInfoVO();
 
-                    //新方法  相同的属性都会被替换,不管是否有值  (source  target)
-                    BeanUtils.copyProperties(productInfo,productInfoVO);
-                    productInfoVOList.add(productInfoVO);
-                }
-            }
-            productVo.setProductInfoVOList(productInfoVOList);
-            productVOList.add(productVo);
+					//新方法  相同的属性都会被替换,不管是否有值  (source  target)
+					BeanUtils.copyProperties(productInfo, productInfoVO);
+					productInfoVOList.add(productInfoVO);
+				}
+			}
+			productVo.setProductInfoVOList(productInfoVOList);
+			productVOList.add(productVo);
 
 
-        }
+		}
 
-        /**
-         * 将返回成功的数据封装成方法
-         */
-        return ResultVoUtil.success(productVOList);
-    }
+		/**
+		 * 将返回成功的数据封装成方法
+		 */
+		return ResultVoUtil.success(productVOList);
+	}
 }

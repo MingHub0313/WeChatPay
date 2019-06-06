@@ -80,10 +80,12 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 			// 订单详情入库
 			orderDetail.setDetailId(KeyUtil.genUniqueKey());
 			orderDetail.setOrderId(orderId);
-      /*orderDetail.setProductName(productInfo.getProductName());
-      orderDetail.setProductIcon(productInfo.getProductIcon());*/
-
-			// 对象copy 从第一个复制到-->第二个
+			/**
+			 *  orderDetail.setProductName(productInfo.getProductName());
+			 *  orderDetail.setProductIcon(productInfo.getProductIcon());
+			 *  对象copy 从第一个复制到-->第二个
+			 */
+			//
 			BeanUtils.copyProperties(productInfo, orderDetail);
 			orderDetailRepository.save(orderDetail);
 		}
@@ -91,10 +93,10 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 		// 3.写入订单数据库(OrderMaster 和 OrderDetail)
 
 		OrderMaster orderMaster = new OrderMaster();
+		orderDTO.setOrderId(orderId);
 		// 先copy 再赋值属性
 
 		// 问题 3 访问接口 orderId返回前台为空
-		orderMaster.setOrderId(orderId);
 		BeanUtils.copyProperties(orderDTO, orderMaster);
 		// 原 设置 setOrderId
 		orderMaster.setOrderAmount(orderAmount);
