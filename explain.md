@@ -136,4 +136,155 @@ items: [{
         5.将剩余库存量存入商品表
 * 从返回的对象中获取 orderId 当作返回给前台的参数
 ```
+```
+GET /sell~~//buyer/order/list~~
+```
+参数
+```
+openid :用户Id
+page   :当前页数
+size   :每页显示记录数
+```
 
+返参
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "date": [
+        {
+            "orderId": "1559805683894683431",
+            "buyerName": "张三",
+            "buyerPhone": "18868822111",
+            "buyerAddress": "浙江",
+            "buyerOpenid": "ew3euwhd7sjw9diwkq",
+            "orderAmount": 19.8,
+            "orderStatus": 0,
+            "payStatus": 0,
+            "createTime": 1559805752,
+            "updateTime": 1559805752
+        },
+        {
+            "orderId": "1559812231863854373",
+            "buyerName": "哈哈",
+            "buyerPhone": "19615681347",
+            "buyerAddress": "安徽",
+            "buyerOpenid": "ew3euwhd7sjw9diwkq",
+            "orderAmount": 9,
+            "orderStatus": 0,
+            "payStatus": 0,
+            "createTime": 1559812285,
+            "updateTime": 1559812285
+        }
+    ]
+}
+```
+说明
+```
+* 判断 openid 是否为空
+* 封装分页参数 new PageRequest(page, size)
+* 访问 Service 层
+    一、
+        1.调用jpa方法访问数据库
+        2.调用工具类将查询到的数据转换为 OrderDTO
+        3.使用 PageImpl<>() 返回 因为 PageImpl实现了Page <>
+* 将返回的 Page<OrderDTO> 中的 内容(getContent) 放入统一的返回方法中
+```
+
+```
+GET /sell~~//buyer/order/detail~~
+```
+参数
+```
+openid  : 用户的openid
+orderId : 订单Id
+```
+
+返参
+```
+SUCCESS
+{
+    "code": 0,
+    "msg": "成功",
+    "date": {
+        "orderId": "1559805683894683431",
+        "buyerName": "张三",
+        "buyerPhone": "18868822111",
+        "buyerAddress": "浙江",
+        "buyerOpenid": "ew3euwhd7sjw9diwkq",
+        "orderAmount": 19.8,
+        "orderStatus": 0,
+        "payStatus": 0,
+        "createTime": 1559805752,
+        "updateTime": 1559805752,
+        "orderDetailList": [
+            {
+                "detailId": "1559805696631658569",
+                "orderId": "1559805683894683431",
+                "productId": "123457",
+                "productName": "皮蛋粥",
+                "productPrice": 9.9,
+                "productQuantity": 2,
+                "productIcon": "http://www.皮蛋粥.jpg",
+                "createTime": 1559805752000,
+                "updateTime": 1559805752000
+            }
+        ]
+    }
+}
+FAIL
+{
+    "timestamp": 1560132282531,
+    "status": 500,
+    "error": "Internal Server Error",
+    "exception": "com.zmm.sell.exception.SellException",
+    "message": "该订单不属于当前用户",
+    "path": "/sell/buyer/order/detail"
+}
+```
+说明
+```
+不安全的做法:调用jpa的 findOne(orderId)方法
+安全做法:
+* 调用Service的方法
+* Service层做出校验 判断查询的订单是否属于当前用户
+* 如果是才显示,否则不显示
+```
+```
+POST /sell~~//buyer/order/cancel~~
+```
+参数
+```
+openid  : 用户的openid
+orderId : 订单Id
+```
+返参
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": []
+}
+```
+说明
+```
+不安全的做法:直接调用service的 cancel(orderDTO)方法
+安全做法:
+* 在service中首先校验(判断)该订单是否属于当前用户
+    如果不是:则抛异常
+    如果是  :则调用service的 cancel(orderDTO) 方法
+* cancel说明
+    1.判断当前订单的状态是否是新订单 如果不是则抛异常
+    2.如果是新订单 修改状态 属性赋值 [BeanUtils.copyProperties(orderDTO, orderMaster)] save(orderMaster)
+    3.判断是否更新成功 如果更新失败抛异常
+    4.如果更新成功返还库存 
+    5.判断订单详情中是否存在该商品 如果无 则抛异常
+    6.如果存在 从订单中获取购物车的数据 调用增库存的方法 increaseStock(cartDTOList)
+    7.如果支付 需要有退款操作
+* increaseStock 说明
+    1.循环遍历购物车数据
+    2.根据商品Id 查询商品数据
+    3.如果为空 则抛异常 商品不存在
+    4.如果存在原库存加上购买数量 [此处还需要使用redis 锁 防止超卖 ]
+    5.更新数据库
+```
