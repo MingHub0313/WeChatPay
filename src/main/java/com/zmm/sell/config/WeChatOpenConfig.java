@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * @Name WechatOpenConfig
+ * @Name WeChatOpenConfig
  * @Author 900045
  * @Created by 2019/6/10 0010
  */
 @Component
-public class WechatOpenConfig {
+public class WeChatOpenConfig {
 
 	@Autowired
-	private WechatAccountConfig accountConfig;
+	private WeChatAccountConfig accountConfig;
 
 	@Bean
 	public WxMpService wxOpenService() {
