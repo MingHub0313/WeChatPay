@@ -1,4 +1,3 @@
-/*
 package com.zmm.sell.controller;
 
 import com.zmm.sell.config.ProjectUrlConfig;
@@ -18,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.net.URLEncoder;
 
-*/
 /**
  * @Name WechatController
  * @Author 900045
  * @Created by 2019/5/30 0030
- *//*
+ */
 
 @Controller
 @RequestMapping("/wechat")
@@ -86,4 +84,3 @@ public class WechatController {
 		return "redirect:" + returnUrl + "?openid=" + openId;
 	}
 }
-*/
