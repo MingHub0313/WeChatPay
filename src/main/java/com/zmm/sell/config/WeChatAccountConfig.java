@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @Name WechatAccountConfig
+ * @Name WeChatAccountConfig
  * @Author 900045
  * @Created by 2019/6/10 0010
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "wechat")
-public class WechatAccountConfig {
+@ConfigurationProperties(prefix = "weChat")
+public class WeChatAccountConfig {
 
 	/**
 	 * 公众平台id
