@@ -7,15 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * @Name WechatPayConfig
+ * @Name WeChatPayConfig
  * @Author 900045
  * @Created by 2019/6/10 0010
  */
 @Component
-public class WechatPayConfig {
+public class WeChatPayConfig {
 
 	@Autowired
-	private WechatAccountConfig accountConfig;
+	private WeChatAccountConfig accountConfig;
 
 	@Bean
 	public BestPayServiceImpl bestPayService() {
