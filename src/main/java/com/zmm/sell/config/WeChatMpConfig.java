@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * @Name WeChatMpConfig
+ * @Name WeChatMpConfig  Mp---公众账号
  * @Author 900045
  * @Created by 2019/6/10 0010
  */
@@ -19,6 +19,11 @@ public class WeChatMpConfig {
 	@Autowired
 	private WeChatAccountConfig accountConfig;
 
+	/**
+	 * WxMpService 作为一个 Bean
+	 *
+	 * @return
+	 */
 	@Bean
 	public WxMpService wxMpService() {
 		WxMpService wxMpService = new WxMpServiceImpl();
@@ -26,9 +31,15 @@ public class WeChatMpConfig {
 		return wxMpService;
 	}
 
+	/**
+	 * 配置 作为一个 Bean
+	 *
+	 * @return
+	 */
 	@Bean
 	public WxMpConfigStorage wxMpConfigStorage() {
 		WxMpInMemoryConfigStorage wxMpConfigStorage = new WxMpInMemoryConfigStorage();
+		//设置属性
 		wxMpConfigStorage.setAppId(accountConfig.getMpAppId());
 		wxMpConfigStorage.setSecret(accountConfig.getMpAppSecret());
 		return wxMpConfigStorage;

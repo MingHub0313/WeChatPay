@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import java.net.URLEncoder;
 
 /**
- * @Name WechatController
+ * @Name WeChatController
  * @Author 900045
  * @Created by 2019/5/30 0030
  */
@@ -26,7 +26,7 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("/wechat")
 @Slf4j
-public class WechatController {
+public class WeChatController {
 
 	@Resource
 	private WxMpService wxMpService;
@@ -39,10 +39,12 @@ public class WechatController {
 
 	@GetMapping("/authorize")
 	public String authorize(@RequestParam("returnUrl") String returnUrl) {
-		//1. 配置
+		//1. 配置 ---统一配置
 		//2. 调用方法
 		String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
+		//获取项目地址+ 接口地址
 		String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));
+		log.info("【微信网页授权】获取 coed ,result={}", redirectUrl);
 		return "redirect:" + redirectUrl;
 	}
 
