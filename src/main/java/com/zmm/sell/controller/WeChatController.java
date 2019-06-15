@@ -21,6 +21,7 @@ import java.net.URLEncoder;
  * @Name WeChatController
  * @Author 900045
  * @Created by 2019/5/30 0030
+ * @RestController 返回json
  */
 
 @Controller
@@ -36,6 +37,9 @@ public class WeChatController {
 
 	@Autowired
 	private ProjectUrlConfig projectUrlConfig;
+	//前端代码:  cd /opt/code/sell_fe_buyer   构建 npm run build
+	//ls -al dist/   cp -r dist/*   /opt/data/wwwroot/sell/
+	//手机微信   代理 --->电脑
 
 	@GetMapping("/authorize")
 	public String authorize(@RequestParam("returnUrl") String returnUrl) {
@@ -43,6 +47,7 @@ public class WeChatController {
 		//2. 调用方法
 		String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
 		//获取项目地址+ 接口地址
+		// OAUTH2_SCOPE_USER_INFO
 		String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));
 		log.info("【微信网页授权】获取 coed ,result={}", redirectUrl);
 		return "redirect:" + redirectUrl;
@@ -50,16 +55,17 @@ public class WeChatController {
 
 	@GetMapping("/userInfo")
 	public String userInfo(@RequestParam("code") String code, @RequestParam("state") String returnUrl) {
-		WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+		WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
 		try {
 			wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
 		} catch (WxErrorException e) {
 			log.error("【微信网页授权】{}", e);
 			throw new SellException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
 		}
-
+		//获取 openId
 		String openId = wxMpOAuth2AccessToken.getOpenId();
 
+		//重定向
 		return "redirect:" + returnUrl + "?openid=" + openId;
 	}
 
@@ -72,7 +78,7 @@ public class WeChatController {
 
 	@GetMapping("/qrUserInfo")
 	public String qrUserInfo(@RequestParam("code") String code, @RequestParam("state") String returnUrl) {
-		WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+		WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
 		try {
 			wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
 		} catch (WxErrorException e) {

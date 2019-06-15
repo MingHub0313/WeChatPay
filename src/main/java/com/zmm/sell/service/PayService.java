@@ -5,15 +5,35 @@ import com.lly835.bestpay.model.RefundResponse;
 import com.zmm.sell.dto.OrderDTO;
 
 /**
+ * 支付
+ *
  * @Name PayService
  * @Author 900045
  * @Created by 2019/5/25 0025
  */
 public interface PayService {
 
-    PayResponse create(OrderDTO orderDTO);
+	/**
+	 * 发起支付
+	 *
+	 * @param orderDTO
+	 * @return
+	 */
+	PayResponse create(OrderDTO orderDTO);
 
-    PayResponse notify(String notifyData);
+	/**
+	 * 通知
+	 *
+	 * @param notifyData
+	 * @return
+	 */
+	PayResponse notify(String notifyData);
 
-    RefundResponse refund(OrderDTO orderDTO);
+	/**
+	 * 退款
+	 *
+	 * @param orderDTO
+	 * @return
+	 */
+	RefundResponse refund(OrderDTO orderDTO);
 }
